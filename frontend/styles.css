@@ -8,8 +8,11 @@ body, html {
 }
 
 .main-header {
-  background:#eee;
-  border-bottom:5px solid #ddd;
+  background:#0092B2;
+  padding:40px;
+  color:white;
+  border-bottom:10px solid #ddd;
+  font-size:50px;
 }
 
 html, body {
@@ -284,6 +287,12 @@ textarea.input {
     max-width:auto!important;
     min-width:auto!important;
   }
+  .main-footer nav {
+    float:none;
+  }
+  .main-footer a { 
+    display:block;
+  }
 }
 
 button.primary, .button.primary {
@@ -307,4 +316,25 @@ button.primary, .button.primary {
   display:flex;
   width:100%;
   min-width:100%;
+}
+
+.main-footer {
+  background:#222;
+  border-top:10px solid #555;
+  padding:40px;
+  font-size:30px;
+  overflow:auto;
+}
+
+.main-footer, .main-footer a {
+  color:white;
+  text-decoration:none;
+}
+
+.main-footer a + a {
+  margin-left:50px;
+}
+
+.main-footer nav {
+  float:right;
 }
