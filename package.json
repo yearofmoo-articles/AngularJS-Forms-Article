@@ -2,6 +2,10 @@
   "name": "YOM-angularjs-forms-demo",
   "version": "0.0.1",
   "devDependencies": {},
+  "main": "app.js",
+  "engines": {
+    "node": "0.10.x"
+  },
   "dependencies": {
     "express": "^4.4.3",
     "mongoose": "^3.8.15",
