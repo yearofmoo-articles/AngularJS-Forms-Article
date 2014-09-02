@@ -19,7 +19,7 @@ http://www.yearofmoo.com/2014/09/taming-forms-in-angularjs-1-3.html
 There is also a live web demo of this. Click the link below to see for yourself:
 
 <!--
-http://yearofmoo-angularjs-forms.herokuapp.com/#/
+http://yom.nu/ng-forms-demo
 -->
 
 ## Installation
