@@ -131,7 +131,7 @@ button.primary, .button.primary {
   border:2px solid white;
 }
 
-.submitted .input[class*="invalid"], .input.ng-touched[class*="invalid"] {
+.ng-submitted .input[class*="invalid"], .input.ng-touched[class*="invalid"] {
   color:maroon;
   background:#fee!important;
   border-color:maroon!important;

@@ -1,9 +1,6 @@
 <form name="signupForm" novalidate
       ng-submit="form.submit(signupForm.$valid)"
-      ng-class="{
-        submitted: signupForm.$submitted,
-        loading:form.submitting 
-      }">
+      ng-class="{ loading:form.submitting }">
   <header>
     <h3 class="heading">Patient Info</h4>
   </header>
