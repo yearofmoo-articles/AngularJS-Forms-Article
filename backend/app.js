@@ -4,8 +4,10 @@ var bodyParser = require('body-parser');
 
 //connect to mongoose
 function bootDB(callback) {
-  mongoose.connect('mongodb://localhost/yom-forms', function(err) {     
-
+  var DEFAULT_DB = 'mongodb://localhost/yom-forms';
+  var db = process.env.MONGOHQ_URL || DEFAULT_DB;
+  console.log(db);
+  mongoose.connect(db, function(err) {     
     require('./Registration');
     callback();
   });
