@@ -59,7 +59,7 @@
              minlength="6"
              minlength="12"
              ng-model="form.data.password"
-             password-validator
+             password-characters-validator
              placeholder="Password"
              required />
       <div ng-if="submitted || signupForm.password.$touched" ng-messages="signupForm.password.$error" class="errors">
@@ -67,6 +67,7 @@
         <div ng-message="minlength">Your username must be longer than 6 characters</div>
         <div ng-message="maxlength">Your password is too long</div>
         <div ng-message="pattern">Your password must consist of alphanumeric characters</div>
+        <div ng-message="passwordCharacters">Your password must contain a number, uppercase and lowercase letters as well as one or more special characters</div>
       </div>
     </div>
 
