@@ -10,17 +10,13 @@ The main features in the example are:
 
 To learn more about this code and how forms work in AngularJS please visit the article below:
 
-<!--
-http://www.yearofmoo.com/2014/09/taming-forms-in-angularjs-1-3.html
--->
+http://yom.nu/ng-forms-post
 
 ## Live Demo
 
 There is also a live web demo of this. Click the link below to see for yourself:
 
-<!--
 http://yom.nu/ng-forms-demo
--->
 
 ## Installation
 
