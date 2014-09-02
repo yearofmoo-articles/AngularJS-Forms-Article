@@ -6,7 +6,6 @@ var bodyParser = require('body-parser');
 function bootDB(callback) {
   var DEFAULT_DB = 'mongodb://localhost/yom-forms';
   var db = process.env.MONGOHQ_URL || DEFAULT_DB;
-  console.log(db);
   mongoose.connect(db, function(err) {     
     require('./Registration');
     callback();

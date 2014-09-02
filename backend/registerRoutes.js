@@ -9,7 +9,7 @@ module.exports = {
     Registration.find({ username: username }).exec(function(err, user) {
       setTimeout(function() {
         var ok = !(user.length || err);
-        res.json(ok ? 200 : 400, {
+        res.status(ok ? 200 : 400).json({
           ok : ok
         });
       }, 500);
