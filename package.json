@@ -2,7 +2,7 @@
   "name": "YOM-angularjs-forms-demo",
   "version": "0.0.1",
   "devDependencies": {},
-  "main": "app.js",
+  "main": "web.js",
   "engines": {
     "node": "0.10.x"
   },
