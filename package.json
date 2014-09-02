@@ -1,0 +1,10 @@
+{
+  "name": "YOM-angularjs-forms-demo",
+  "version": "0.0.1",
+  "devDependencies": {},
+  "dependencies": {
+    "express": "^4.4.3",
+    "mongoose": "^3.8.15",
+    "body-parser": "^1.7.0"
+  }
+}

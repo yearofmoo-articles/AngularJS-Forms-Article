@@ -1,0 +1,158 @@
+<form name="signupForm" novalidate
+      ng-submit="submitted = true; form.submit(signupForm.$valid)"
+      ng-class="{submitted:submitted, loading:form.submitting}">
+  <header>
+    <h3 class="heading">Patient Info</h4>
+  </header>
+
+  <div class="fields">
+    
+    <div class="field name-field">
+      <input class="input" type="text" name="name" ng-model="form.data.name" name="name" required placeholder="First Name + Last Name" />
+      <div ng-if="submitted || signupForm.name.$touched" ng-messages="signupForm.name.$error" class="errors">
+        <div ng-message="required">You did not enter your name</div>
+      </div>
+    </div>
+
+    <div class="field age-field">
+      <input class="input"
+             type="number"
+             name="age"
+             ng-model="form.data.age"
+             name="age"
+             min="18"
+             placeholder="Your Age"
+             required />
+      <div ng-if="submitted || signupForm.age.$touched" ng-messages="signupForm.age.$error" class="errors">
+        <div ng-message="required">You did not enter your age</div>
+        <div ng-message="number">You have entered an invalid age</div>
+        <div ng-message="min">Your age must be above the age of 18</div>
+      </div>
+    </div>
+
+    <div class="field username-field" ng-class="{loading:signupForm.username.$pending}">
+      <input type="text"
+             class="input"
+             name="username"
+             minlength="4"
+             maxlength="15"
+             ng-model="form.data.username"
+             pattern="^[-\w]+$"
+             ng-model-options="{ debounce: { default : 500, blur: 0 }}"
+             username-available-validator
+             placeholder="Choose a username for yourself"
+             required />
+
+      <div ng-if="submitted || signupForm.username.$dirty" ng-messages="signupForm.username.$error" class="errors">
+        <div ng-message="required">You did not enter your username</div>
+        <div ng-message="minlength">Your username must be longer than 4 characters</div>
+        <div ng-message="maxlength">Your username is too long</div>
+        <div ng-message="pattern">Your username must consist of alphanumeric characters</div>
+        <div ng-message="usernameAvailable">The username entered has already been registered</div>
+      </div>
+    </div>
+
+    <div class="field password-field">
+      <input type="password"
+             class="input"
+             name="password"
+             minlength="6"
+             minlength="12"
+             ng-model="form.data.password"
+             password-validator
+             placeholder="Password"
+             required />
+      <div ng-if="submitted || signupForm.password.$touched" ng-messages="signupForm.password.$error" class="errors">
+        <div ng-message="required">You did not enter your password</div>
+        <div ng-message="minlength">Your username must be longer than 6 characters</div>
+        <div ng-message="maxlength">Your password is too long</div>
+        <div ng-message="pattern">Your password must consist of alphanumeric characters</div>
+      </div>
+    </div>
+
+    <div class="field password-field">
+      <input type="password"
+             class="input"
+             name="passwordRepeat"
+             required
+             ng-model="form.data.passwordConfirmation"
+             placeholder="Password Confirmation"
+             compare-to-validator="form.data.password" />
+      <div ng-if="submitted || signupForm.passwordRepeat.$touched || signupForm.password.$touched"
+           ng-messages="signupForm.passwordRepeat.$error"
+           class="errors">
+        <div ng-message="required">You must enter a confirmation password</div>
+        <div ng-message="compareTo">Both passwords must match</div>
+      </div>
+    </div>
+
+    <div class="field details-field">
+      <textarea class="input" 
+                ng-model="data.details"
+                placeholder="Enter any details regarding the appointment"
+                name="details"
+                required>
+      </textarea>
+      <div ng-if="submitted || signupForm.details.$touched" ng-messages="signupForm.details.$error" class="errors">
+        <div ng-message="required">You did not enter any appointment details</div>
+      </div>
+    </div>
+  </div>
+
+  <header>
+    <h3 class="heading">Appointment Details</h3>
+  </header>
+
+  <div class="fields">
+    <div class="field">
+      <label class="label" for="name">Date (from):</label>
+      <input class="input" type="datetime-local" name="dateFrom" ng-model="form.data.dateFrom" required class="input" />
+      <div ng-if="submitted || signupForm.dateFrom.$touched" ng-messages="signupForm.dateFrom.$error" class="errors">
+        <div ng-message="datetimelocal">You have entered an invalid date</div>
+        <div ng-message="required">You must enter a starting appointment date time</div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label" for="name">Date (to):</label>
+      <input type="datetime-local"
+             class="input"
+             name="dateTo"
+             ng-model="form.data.dateTo"
+             required />
+      <div ng-if="submitted || signupForm.dateTo.$touched" ng-messages="signupForm.dateTo.$error" class="errors">
+        <div ng-message="datetimelocal">You have entered an invalid date</div>
+        <div ng-message="required">You must enter an ending appointment date time</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="field">
+    <label class="label">
+      <input type="checkbox" name="allowNotifications" ng-model="notificationsOn" /> Notify me when the event is ready
+    </label>
+  </div>
+
+  <div class="fields email-fields">
+    <div ng-form="reminders" ng-if="notificationsOn">
+      <a href="" class="button secondary" ng-click="form.data.reminders.push('')">+ Email</a>
+      <div class="field" ng-repeat="reminder in form.data.reminders track by $index" ng-form="reminderForm">
+        <input type="email" name="email" ng-model="reminder" placeholder="Email Address" class="input" required />
+        <a href="" class="button secondary" ng-click="form.data.reminders.splice($index, 1)">
+          <span class="fa fa-trash"></span>
+        </a>
+      </div>
+    </div>
+    
+    <div ng-if="submitted || signupForm.reminders.$dirty" ng-messages="signupForm.reminders.$error" class="errors">
+      <div ng-message="required">You did not enter an email for each field</div>
+      <div ng-message="email">Each field must contain a valid email</div>
+    </div>
+  </div>
+
+  <nav class="form-actions">
+    <input type="submit" value="Create Appointment" class="button primary" />
+  </nav>
+
+</form>
