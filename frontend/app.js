@@ -1,6 +1,13 @@
-angular.module('AppointmentApp', ['ngMessages', 'ngAnimate', 'ngRoute'])
+angular.module('AppointmentApp', ['ngMessages', 'ngAnimate', 'ngRoute', 'reCAPTCHA'])
 
-  .config(['$routeProvider', function($routeProvider) {
+  .constant('RECAPTCHA', (function() { return !/localhost:/.test(window.location) })())
+
+  .run(['$rootScope', 'RECAPTCHA', function($rootScope, RECAPTCHA) {
+    $rootScope.showRecaptcha = RECAPTCHA;
+  }])
+
+  .config(['$routeProvider', 'reCAPTCHAProvider', 'RECAPTCHA',
+   function($routeProvider,   reCAPTCHAProvider,   RECAPTCHA) {
     $routeProvider.when('/', {
       templateUrl: './form.html',
       controller: 'FormCtrl as form'
@@ -8,6 +15,13 @@ angular.module('AppointmentApp', ['ngMessages', 'ngAnimate', 'ngRoute'])
     $routeProvider.when('/completed', {
       templateUrl: './completed.html',
     });
+    
+    if (RECAPTCHA) {
+      reCAPTCHAProvider.setPublicKey('6LcnjvkSAAAAAN5bea5NRK87pI0UuoetbOZDvyEb');
+      reCAPTCHAProvider.setOptions({
+          theme: 'clean'
+      });
+    }
   }])
 
   .directive('usernameAvailableValidator', ['$http', function($http) {
@@ -25,6 +39,9 @@ angular.module('AppointmentApp', ['ngMessages', 'ngAnimate', 'ngRoute'])
     return {
       require : 'ngModel',
       link : function(scope, element, attrs, ngModel) {
+        scope.$watch(attrs.compareToValidator, function() {
+          ngModel.$validate();
+        });
         ngModel.$validators.compareTo = function(value) {
           var other = scope.$eval(attrs.compareToValidator);
           return !value || !other || value == other;
@@ -33,9 +50,9 @@ angular.module('AppointmentApp', ['ngMessages', 'ngAnimate', 'ngRoute'])
     }
   })
   
-  .controller("FormCtrl", ["$scope", "$http", "$location", function($scope, $http, $location) {
+  .controller("FormCtrl", ["$scope", "$http", "$location", "RECAPTCHA", function($scope, $http, $location, RECAPTCHA) {
     this.data = {};
-    this.data.reminders = [""];
+    this.data.emails = [""];
 
     var self = this;
     this.submit = function(valid) {
@@ -43,10 +60,15 @@ angular.module('AppointmentApp', ['ngMessages', 'ngAnimate', 'ngRoute'])
 
       self.submitting = true;
 
+      //we don't if it's valid yet, but the reject will handle this
+      self.captchaError = false;
+
       $http.post("/api/register", self.data).then(function() {
         self.data = [];
-        self.submitting = false;
         $location.path('/completed');
+      }, function(response) {
+        self.submitting = false;
+        self.captchaError = response.data && /incorrect captcha/.test(response.data.status);
       });
     };
   }])

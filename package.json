@@ -9,6 +9,7 @@
   "dependencies": {
     "express": "^4.4.3",
     "mongoose": "^3.8.15",
-    "body-parser": "^1.7.0"
+    "body-parser": "^1.7.0",
+    "simple-recaptcha": "0.0.3"
   }
 }

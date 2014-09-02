@@ -135,20 +135,30 @@
   </div>
 
   <div class="fields email-fields">
-    <div ng-form="reminders" ng-if="notificationsOn">
-      <a href="" class="button secondary" ng-click="form.data.reminders.push('')">+ Email</a>
-      <div class="field" ng-repeat="reminder in form.data.reminders track by $index" ng-form="reminderForm">
+    <div ng-form="emails" ng-if="notificationsOn">
+      <a href="" class="button secondary" ng-click="form.data.emails.push('')">+ Email</a>
+      <div class="field" ng-repeat="reminder in form.data.emails track by $index" ng-form="reminderForm">
         <input type="email" name="email" ng-model="reminder" placeholder="Email Address" class="input" required />
-        <a href="" class="button secondary" ng-click="form.data.reminders.splice($index, 1)">
+        <a href="" class="button secondary" ng-click="form.data.emails.splice($index, 1)">
           <span class="fa fa-trash"></span>
         </a>
       </div>
     </div>
     
-    <div ng-if="submitted || signupForm.reminders.$dirty" ng-messages="signupForm.reminders.$error" class="errors">
+    <div ng-if="submitted || signupForm.emails.$dirty" ng-messages="signupForm.emails.$error" class="errors">
       <div ng-message="required">You did not enter an email for each field</div>
       <div ng-message="email">Each field must contain a valid email</div>
     </div>
+  </div>
+
+  <div ng-if="showRecaptcha">
+    <label class="label">
+      <p>Robots are not welcome here!</p>
+      <div re-captcha ng-model="form.data.recaptcha" name="captcha" required></div>
+      <div ng-if="form.captchaError" class="errors">
+        Please enter a new value and try again
+      </div>
+    </label>
   </div>
 
   <nav class="form-actions">
